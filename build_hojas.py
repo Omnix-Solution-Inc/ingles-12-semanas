@@ -89,9 +89,13 @@ def build_day(d, outdir):
     ipa_w = pdfmetrics.stringWidth(s['ipa'], 'InterB', 12)
     c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(58 + ipa_w + 10, y-10, s['line1'])
     c.setFillColor(GRAY); c.setFont('Inter', 10); c.drawString(84, y-24, s['line2'])
+    c.setFillColor(TEAL); c.setFont('InterB', 10)
+    c.drawString(58, y-40, 'Practice pair:')
     c.setFillColor(INK); c.setFont('Inter', 10)
-    c.drawString(58, y-40, f'Say this phrase out loud 5 times:  "{d["phrase"]["en"]}"')
-    y -= 56
+    c.drawString(140, y-40, f'{s["pair"][0]}  ·  {s["pair"][1]}   —   say both 5 times, feel the difference')
+    c.setFillColor(GRAY); c.setFont('Inter', 10)
+    c.drawString(58, y-54, f'Say this phrase out loud 5 times:  "{d["phrase"]["en"]}"')
+    y -= 70
     # 3. GRAMÁTICA
     g = d['grammar']
     y = section(c, y, 3, 'Grammar in 5 minutes', 'Today: ' + g['title'])

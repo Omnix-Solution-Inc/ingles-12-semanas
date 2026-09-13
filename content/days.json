@@ -48,7 +48,11 @@
         "ipa": "/iː/",
         "hint": "LONG vowel — say it with a smile.",
         "line1": "meet · eat · sea   →   LONG vowel, stretch it",
-        "line2": "/ɪ/   sit · it · big   →   short vowel, quick and relaxed"
+        "line2": "/ɪ/   sit · it · big   →   short vowel, quick and relaxed",
+        "pair": [
+          "eat",
+          "it"
+        ]
       },
       "grammar": {
         "title": "Introduce yourself with  I am  and  My name is.",
@@ -142,7 +146,11 @@
         "ipa": "/eɪ/",
         "hint": "A moving vowel — starts as e, glides to i.",
         "line1": "day · say · name   →   your mouth moves from e to i",
-        "line2": "/e/   bed · said · red   →   short, flat vowel"
+        "line2": "/e/   bed · said · red   →   short, flat vowel",
+        "pair": [
+          "say",
+          "said"
+        ]
       },
       "grammar": {
         "title": "Good + the time of day:  Good morning / afternoon / evening / night.",
@@ -236,7 +244,11 @@
         "ipa": "/aʊ/",
         "hint": "A gliding vowel — a + u together.",
         "line1": "how · now · out   →   open, then round your lips",
-        "line2": "/oʊ/   go · no · so   →   round and long"
+        "line2": "/oʊ/   go · no · so   →   round and long",
+        "pair": [
+          "now",
+          "no"
+        ]
       },
       "grammar": {
         "title": "How are you? — I'm fine, thanks.  (I'm = I am)",
@@ -252,7 +264,12 @@
           [
             "2.   I'm ",
             ", thanks. And you?",
-            "fine"
+            "fine",
+            [
+              "okay",
+              "ok",
+              "good"
+            ]
           ],
           [
             "3.   ",
@@ -330,7 +347,11 @@
         "ipa": "/ʌ/",
         "hint": "Short and soft — relax your mouth.",
         "line1": "mother · brother · love   →   short, soft vowel",
-        "line2": "/uː/   you · food · blue   →   long, round vowel"
+        "line2": "/uː/   you · food · blue   →   long, round vowel",
+        "pair": [
+          "love",
+          "food"
+        ]
       },
       "grammar": {
         "title": "This is  (one person)  /  These are  (more than one).",
@@ -341,7 +362,14 @@
           [
             "1.   This is my ",
             ".",
-            "mother"
+            "mother",
+            [
+              "father",
+              "sister",
+              "brother",
+              "friend",
+              "family"
+            ]
           ],
           [
             "2.   ",
@@ -424,7 +452,11 @@
         "ipa": "/ə/",
         "hint": "The relaxed schwa — the lazy vowel.",
         "line1": "country · today · about   →   soft, quick, relaxed",
-        "line2": "Every long vowel can become /ə/ in fast speech"
+        "line2": "Every long vowel can become /ə/ in fast speech",
+        "pair": [
+          "about",
+          "above"
+        ]
       },
       "grammar": {
         "title": "I'm from  +  a city or a country.",
@@ -518,7 +550,11 @@
         "ipa": "/θ/",
         "hint": "Put your tongue between your teeth!",
         "line1": "three · thank · think   →   tongue between the teeth",
-        "line2": "/t/   tree · tank · ten   →   tongue behind the teeth"
+        "line2": "/t/   tree · tank · ten   →   tongue behind the teeth",
+        "pair": [
+          "three",
+          "tree"
+        ]
       },
       "grammar": {
         "title": "How old are you? — I'm 30 years old.",
@@ -612,7 +648,11 @@
         "ipa": "review",
         "hint": "The four sounds of your first week.",
         "line1": "/iː/ meet    /aʊ/ how    /θ/ three    /ə/ country",
-        "line2": "Say each one out loud one more time — you own them now."
+        "line2": "Say each one out loud one more time — you own them now.",
+        "pair": [
+          "three",
+          "tree"
+        ]
       },
       "grammar": {
         "title": "Week 1 in review:  I am · My name is · This is · I'm from.",

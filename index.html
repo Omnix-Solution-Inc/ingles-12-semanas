@@ -67,6 +67,10 @@ h1{font-family:Georgia,'Times New Roman',serif;font-size:34px;margin-top:6px}
 .tblock{margin-top:12px}
 .mini{display:inline-block;padding:8px 15px;font-size:12px;border-radius:18px;margin-top:8px;border:1.5px solid var(--lime);background:var(--lime-light);color:var(--kaki);font-weight:700;cursor:pointer}
 .ans{margin-top:6px;background:var(--lime-light);border-radius:10px;padding:8px 12px;display:none}
+.pword{flex:1;border:1.5px solid var(--lime);background:var(--lime-light);color:var(--ink);border-radius:12px;padding:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.exrow{margin-top:12px}
+.fb{margin-top:7px;font-weight:700;font-size:13px}
+.fb.ok{color:var(--kaki)} .fb.no{color:#A34E1F}
 </style>
 </head>
 <body>
@@ -124,16 +128,30 @@ function render(){
   h+='<section class="card"><h2>Words of the day</h2><div class="note">7 new words · Tap ▶ to hear each one</div>';
   d.words.forEach(w=>{h+=`<div class="wrow"><div><div class="en">${esc(w[0])} <span class="ipa">${esc(w[1])}</span></div><div class="es">${esc(w[2])}</div></div><button class="play" onclick="say('${esc(w[0])}')">▶</button></div>`});
   h+='</section>';
-  h+=`<section class="card"><h2>Sound of the day</h2><div class="big"><span class="ipa">${esc(d.sound.ipa)}</span></div><div class="hint">${esc(d.sound.hint)}<br>${esc(d.sound.line1)}<br>${esc(d.sound.line2)}</div><button class="play" style="margin-top:10px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
-  h+=`<section class="card"><h2>Grammar in 5 minutes</h2><div class="big" style="font-size:16.5px">${esc(d.grammar.title)}</div><div class="gbox">${esc(d.grammar.ex1)}<br>${esc(d.grammar.ex2)}</div></section>`;
+  h+=`<section class="card"><h2>Sound of the day</h2><div class="big"><span class="ipa">${esc(d.sound.ipa)}</span></div><div class="hint">${esc(d.sound.hint)}<br>${esc(d.sound.line1)}<br>${esc(d.sound.line2)}</div><div style="display:flex;gap:10px;margin-top:10px"><button class="pword" onclick="say('${esc(d.sound.pair[0])}')">${esc(d.sound.pair[0])} ▶</button><button class="pword" onclick="say('${esc(d.sound.pair[1])}')">${esc(d.sound.pair[1])} ▶</button></div><div class="note" style="margin-top:6px">Practice pair — say both, feel the difference.</div><button class="play" style="margin-top:10px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
+  const gk='i12ex_'+d.day;
+  h+=`<section class="card"><h2>Grammar in 5 minutes</h2><div class="big" style="font-size:16.5px">${esc(d.grammar.title)}</div><div class="gbox">${esc(d.grammar.ex1)}<br>${esc(d.grammar.ex2)}</div><div class="note" style="margin-top:12px">${esc(d.grammar.intro)}</div>`;
+  d.grammar.exercises.forEach((ex,i)=>{
+    const alt=(ex[3]||[]).join('|');
+    h+=`<div class="exrow"><div class="hint" style="margin:0">${esc(ex[0])}</div><input class="winput ex" data-i="${i}" data-k="${gk}_${i}" data-ans="${esc(ex[2])}" data-alt="${alt}" data-free="${ex[2]==='your age'?'1':''}" placeholder="Your answer"><div class="hint" style="margin:0">${esc(ex[1])}</div><button class="mini chkex" data-i="${i}" style="margin-top:6px">Check</button><div class="fb" data-i="${i}"></div></div>`;
+  });
+  h+=`</section>`;
   const pk='i12speak_'+d.day, wk='i12write_'+d.day;
   h+=`<section class="card"><h2>Speak today</h2><div class="note">Out loud, in your real voice — check each one.</div>`;
   d.practice.speak.forEach((t,i)=>{h+=`<label class="srow"><input type="checkbox" class="spk" data-k="${pk}_${i}"><span>${esc(t)}</span></label>`});
   h+=`</section>`;
   h+=`<section class="card"><h2>Write today</h2><div class="note">Real writing — saved on your phone as you type.</div>`;
-  d.practice.translate.forEach((tr,i)=>{h+=`<div class="tblock"><div class="hint">${esc(tr[0])}</div><input class="winput tr" data-k="${wk}_tr${i}" placeholder="Write it in English"><button class="mini" data-i="${i}">Show answer</button><div class="ans hint" data-i="${i}">${esc(tr[1])}</div></div>`});
+  d.practice.translate.forEach((tr,i)=>{h+=`<div class="tblock"><div class="hint">${esc(tr[0])}</div><input class="winput tr" data-i="${i}" data-k="${wk}_tr${i}" data-ans="${esc(tr[1])}" placeholder="Write it in English"><button class="mini chktr" data-i="${i}" style="margin-top:6px">Check my answer</button><div class="fb" data-t="${i}"></div></div>`});
   h+=`<div class="tblock"><div class="hint">${esc(d.practice.write)}</div><textarea class="winput" data-k="${wk}_free" rows="4" placeholder="Write here"></textarea></div></section>`;
   h+=`<section class="card"><h2>Phrase of the day</h2><div class="quote"><div class="q">"${esc(d.phrase.en)}"</div><div class="t">${esc(d.phrase.es)}</div></div><button class="play" style="margin-top:12px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
+  const snds=[];
+  DAYS.filter(x=>x.day<=d.day).forEach(x=>{
+    const rev=x.sound.ipa==='review';
+    snds.push({sym:rev?'★ Week review':x.sound.ipa, w:rev?'your first 4 sounds':x.sound.line1.split('·')[0].trim()});
+  });
+  h+=`<section class="card"><h2>Your sounds</h2><div class="note">Every sound you own so far — tap to hear.</div>`;
+  snds.forEach(sv=>{h+=`<div class="wrow"><div><div class="en">${esc(sv.sym)}</div><div class="es">${esc(sv.w)}</div></div><button class="play" onclick="say('${esc(sv.w)}')">▶</button></div>`});
+  h+=`</section>`;
   h+=`<section class="card"><h2>How did you feel today?</h2><div class="note">Mark one and celebrate your day.</div><div class="feel" id="feel">
     <label class="flabel"><input type="radio" name="f" value="Great">Great</label>
     <label class="flabel"><input type="radio" name="f" value="Okay">Okay</label>
@@ -148,7 +166,29 @@ function render(){
   const saved=localStorage.getItem(fk);if(saved){const e=document.querySelector(`#feel input[value="${saved}"]`);if(e)e.checked=true}
   document.querySelectorAll('.spk').forEach(cb=>{cb.checked=localStorage.getItem(cb.dataset.k)==='1';cb.onchange=()=>{localStorage.setItem(cb.dataset.k,cb.checked?'1':'0');if(cb.checked)toast('Nice — you said it out loud 🌻')}});
   document.querySelectorAll('.winput').forEach(el=>{el.value=localStorage.getItem(el.dataset.k)||'';el.oninput=()=>localStorage.setItem(el.dataset.k,el.value)});
-  document.querySelectorAll('.mini[data-i]').forEach(b=>{b.onclick=()=>{const a=document.querySelector('.ans[data-i="'+b.dataset.i+'"]');const show=a.style.display==='none';a.style.display=show?'block':'none';b.textContent=show?'Hide answer':'Show answer'}});
+  function norm(v){return (v||'').toLowerCase().replace(/[.,!?;:'"]/g,'').replace(/\s+/g,' ').trim()}
+  function setFb(el,ok,msg){el.className='fb '+(ok?'ok':'no');el.textContent=msg}
+  function checkAns(inp,fb){
+    const v=norm(inp.value), ans=norm(inp.dataset.ans);
+    const alt=(inp.dataset.alt||'').split('|').filter(Boolean).map(norm);
+    localStorage.setItem(inp.dataset.k,inp.value);
+    if(!v){setFb(fb,false,'Write your answer first 🙂');return}
+    if(inp.dataset.free==='1'){localStorage.setItem(inp.dataset.k+'_ok','1');setFb(fb,true,'✓ Correct — your own answer counts!');return}
+    const ok=v===ans||alt.includes(v);
+    const att=1+(+(localStorage.getItem(inp.dataset.k+'_att')||0));
+    localStorage.setItem(inp.dataset.k+'_att',att);
+    if(ok){localStorage.setItem(inp.dataset.k+'_ok','1');localStorage.setItem(inp.dataset.k+'_att','0');setFb(fb,true,'✓ Correct!');say(v)}
+    else if(att>=2){setFb(fb,false,'✗ The correct answer is: '+inp.dataset.ans);localStorage.setItem(inp.dataset.k+'_att','0')}
+    else{setFb(fb,false,'✗ Not yet — try again (one more try)')}
+  }
+  document.querySelectorAll('.chkex').forEach(b=>{b.onclick=()=>{const i=b.dataset.i;checkAns(document.querySelector('.ex[data-i="'+i+'"]'),document.querySelector('.fb[data-i="'+i+'"]'))}});
+  document.querySelectorAll('.chktr').forEach(b=>{b.onclick=()=>{const i=b.dataset.i;checkAns(document.querySelector('.tr[data-i="'+i+'"]'),document.querySelector('.fb[data-t="'+i+'"]'))}});
+  document.querySelectorAll('.ex,.tr').forEach(inp=>{
+    if(localStorage.getItem(inp.dataset.k+'_ok')==='1'){
+      const sel=inp.classList.contains('ex')?'.fb[data-i="'+inp.dataset.i+'"]':'.fb[data-t="'+inp.dataset.i+'"]';
+      const fb=document.querySelector(sel);if(fb)setFb(fb,true,'✓ Correct!');
+    }
+  });
   $('pstats').textContent=completedCount()+' day'+(completedCount()===1?'':'s')+' completed · streak '+s.count+' · progress '+Math.round(completedCount()/84*100)+'%';
   const dc=$('done');dc.checked=localStorage.getItem(dk)==='1';
   dc.onchange=()=>{
