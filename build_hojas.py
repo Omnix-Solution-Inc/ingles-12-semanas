@@ -55,7 +55,7 @@ def build_day(d, outdir):
     c.setFillColor(INK); c.setFont('PlayB', 24)
     c.drawString(48, H-52, f'Day {d["day"]} of 84')
     c.setFillColor(BUTTER_DEEP); c.setFont('Inter', 10.5)
-    c.drawString(48, H-70, f'WEEK {d["week"]} · PHASE 1 · THE BUILDING BLOCKS  ·  DAILY WORKSHEET')
+    c.drawString(48, H-70, f'WEEK {d["week"]} · {d["phase"].upper()}  ·  DAILY WORKSHEET')
     c.setFillColor(INK); c.setFont('PlaySB', 13); c.drawRightString(W-48, H-52, 'Inglés 12 Semanas')
     c.setFillColor(BUTTER_DEEP); c.setFont('Inter', 9); c.drawRightString(W-48, H-70, '(provisional name)')
     c.setFillColor(LIME); c.rect(48, H-100, W-96, 2.4, fill=1, stroke=0)
@@ -71,13 +71,19 @@ def build_day(d, outdir):
     y -= 6
     words = d['words']
     row_h = 22
-    tab_top, tab_bot = y, y - len(words)*row_h
+    last_w, last_ph = words[-1][0], words[-1][1]
+    last_wraps = pdfmetrics.stringWidth(last_w, 'InterB', 11.5) + 8 + pdfmetrics.stringWidth(last_ph, 'Inter', 9) > 110
+    tab_top, tab_bot = y, y - len(words)*row_h - (10 if last_wraps else 0)
     c.setFillColor(TEALL); c.rect(48, tab_bot, W-96, tab_top - tab_bot, fill=1, stroke=0)
     for i, (w_, ph, m) in enumerate(words):
         ry = tab_top - i*row_h - 15
         c.setFillColor(INK); c.setFont('InterB', 11.5); c.drawString(58, ry, w_)
-        c.setFont('Inter', 9); c.setFillColor(GRAY)
-        c.drawString(58 + pdfmetrics.stringWidth(w_, 'InterB', 11.5) + 8, ry, ph)
+        c.setFillColor(GRAY)
+        we = pdfmetrics.stringWidth(w_, 'InterB', 11.5)
+        if we + 8 + pdfmetrics.stringWidth(ph, 'Inter', 9) > 110:
+            c.setFont('Inter', 7.5); c.drawString(58, ry - 9.5, ph)
+        else:
+            c.setFont('Inter', 9); c.drawString(58 + we + 8, ry, ph)
         c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(176, ry, m)
         for seg in range(3):
             lx = 288 + seg*92
@@ -108,7 +114,8 @@ def build_day(d, outdir):
     y -= 54
     c.setFillColor(TEAL); c.setFont('InterB', 11); c.drawString(58, y, g['intro'])
     c.setFillColor(INK); c.setFont('Inter', 11)
-    for i, (left, right, _ans) in enumerate(g['exercises']):
+    for i, ex in enumerate(g['exercises']):
+        left, right = ex[0], ex[1]
         yy = y - 18 - i*19
         c.drawString(58, yy, left)
         fx = 58 + pdfmetrics.stringWidth(left, 'Inter', 11) + 4

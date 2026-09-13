@@ -134,7 +134,7 @@ function render(){
   h+=`<section class="card"><h2>Grammar in 5 minutes</h2><div class="big" style="font-size:16.5px">${esc(d.grammar.title)}</div><div class="gbox">${esc(d.grammar.ex1)}<br>${esc(d.grammar.ex2)}</div><div class="note" style="margin-top:12px">${esc(d.grammar.intro)}</div><div class="esh">Escribe tu respuesta y toca Check — la app te corrige.</div>`;
   d.grammar.exercises.forEach((ex,i)=>{
     const alt=(ex[3]||[]).join('|');
-    h+=`<div class="exrow"><div class="hint" style="margin:0">${esc(ex[0])}</div><input class="winput ex" data-i="${i}" data-k="${gk}_${i}" data-ans="${esc(ex[2])}" data-alt="${alt}" data-free="${ex[2]==='your age'?'1':''}" placeholder="Your answer"><div class="hint" style="margin:0">${esc(ex[1])}</div><button class="mini chkex" data-i="${i}" style="margin-top:6px">Check</button><div class="fb" data-i="${i}"></div></div>`;
+    h+=`<div class="exrow"><div class="hint" style="margin:0">${esc(ex[0])}</div><input class="winput ex" data-i="${i}" data-k="${gk}_${i}" data-ans="${esc(ex[2])}" data-alt="${alt}" data-free="${(ex[2]||'').substring(0,5)==='your '?'1':''}" placeholder="Your answer"><div class="hint" style="margin:0">${esc(ex[1])}</div><button class="mini chkex" data-i="${i}" style="margin-top:6px">Check</button><div class="fb" data-i="${i}"></div></div>`;
   });
   h+=`</section>`;
   const pk='i12speak_'+d.day, wk='i12write_'+d.day;
