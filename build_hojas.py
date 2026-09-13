@@ -61,6 +61,8 @@ def build_day(d, outdir):
     c.setFillColor(LIME); c.rect(48, H-100, W-96, 2.4, fill=1, stroke=0)
     c.setFillColor(INK); c.setFont('PlaySB', 15)
     c.drawString(48, H-140, 'Today:  ' + d['topic'])
+    c.setFont('Inter', 7.5); c.setFillColor(GRAY)
+    c.drawString(48, H-153, 'Ayuda en español: escribe cada palabra 3 veces · escucha y repite el sonido · completa los ejercicios · copia la frase del día.')
     c.setFont('Inter', 9.5); c.setFillColor(GRAY)
     c.drawString(390, H-140, 'Your name:')
     field(c, 'student_name', 462, H-143, 102, tip='Type your name here')
@@ -133,6 +135,8 @@ def build_day(d, outdir):
     c.drawString(48, H-68, 'SPEAK A LITTLE, WRITE A LITTLE — EVERY SINGLE DAY')
     c.setFillColor(INK); c.setFont('PlaySB', 12); c.drawRightString(W-48, H-48, 'Inglés 12 Semanas')
     c.setFillColor(LIME); c.rect(48, H-82, W-96, 2.4, fill=1, stroke=0)
+    c.setFont('Inter', 7.5); c.setFillColor(GRAY)
+    c.drawString(48, H-104, 'Ayuda en español: habla en voz alta marcando cada casilla · escribe tus respuestas en las líneas · traduce al inglés.')
     y = H-122
     pr = d['practice']
     # 5. SPEAK TODAY
