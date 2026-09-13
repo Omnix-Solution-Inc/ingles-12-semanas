@@ -78,11 +78,13 @@ function $(id){return document.getElementById(id)}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function toast(m,ms=2200){const t=$('toast');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,ms)}
 function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast('Audio not available')}}
-// fecha de inicio: primera visita
-let start=localStorage.getItem('i12_start');
-if(!start){start=new Date().toDateString();localStorage.setItem('i12_start',start)}
-const startDate=new Date(start);
-function dayNumber(){return Math.min(Math.floor((Date.now()-startDate.getTime())/DAY_MS)+1,84)}
+// los días se liberan mientras avanzas: completa un día → se desbloquea el siguiente
+function dayNumber(){
+  let n=1;
+  while(localStorage.getItem('i12done_'+n)==='1'&&n<84)n++;
+  return n;
+}
+function completedCount(){let c=0;for(let n=1;n<=84;n++){if(localStorage.getItem('i12done_'+n)==='1')c++}return c}
 // racha
 const today=new Date().toDateString();
 let s=JSON.parse(localStorage.getItem('i12s')||'{}');
@@ -97,10 +99,10 @@ fetch('./content/days.json?v='+Date.now()).then(r=>r.json()).then(D=>{DAYS=D.day
 function render(){
   const dn=dayNumber();
   const d=DAYS.find(x=>x.day===dn);
-  $('prog').textContent='Progress '+Math.round((dn-1)/84*100)+'%';
+  $('prog').textContent='Progress '+Math.round(completedCount()/84*100)+'%';
   if(!d){
     $('sub').textContent='Day '+dn+' of 84 · Week '+Math.ceil(dn/7);
-    $('content').innerHTML='<div class="tomorrow"><div class="em">🌱</div><p>Day '+dn+' is being prepared.<br>New content is served automatically — open this page again tomorrow morning.</p></div>';
+    $('content').innerHTML='<div class="tomorrow"><div class="em">🌱</div><p>Day '+dn+' is being prepared for you.<br>Content is served automatically — refresh this page in a moment.</p></div>';
     return;
   }
   $('sub').textContent='Day '+d.day+' of 84 · Week '+d.week+' · '+d.phase;
@@ -123,8 +125,13 @@ function render(){
   document.querySelectorAll('#feel input').forEach(r=>{r.onchange=()=>{localStorage.setItem(fk,r.value);toast('Marked: '+r.value)}});
   const saved=localStorage.getItem(fk);if(saved){const e=document.querySelector(`#feel input[value="${saved}"]`);if(e)e.checked=true}
   const dc=$('done');dc.checked=localStorage.getItem(dk)==='1';
-  dc.onchange=()=>{localStorage.setItem(dk,dc.checked?'1':'0');if(dc.checked)toast('Day '+d.day+' complete! New content arrives tomorrow 🌻');upd()};
-  function upd(){} // progreso ya mostrado arriba por días
+  dc.onchange=()=>{
+    localStorage.setItem(dk,dc.checked?'1':'0');
+    if(dc.checked){
+      toast('Day '+d.day+' complete! Day '+(d.day+1)+' is unlocked 🌻',2600);
+      setTimeout(render,1600);
+    }
+  };
 }
 </script>
 </body>
