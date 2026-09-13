@@ -1,0 +1,216 @@
+{
+  "program": "Inglés 12 Semanas",
+  "total_days": 84,
+  "days": [
+    {
+      "day": 1, "week": 1, "phase": "The Building Blocks",
+      "topic": "Say hello and introduce yourself",
+      "words": [
+        ["hello", "/həˈloʊ/", "hola"],
+        ["good", "/ɡʊd/", "bueno / buena"],
+        ["morning", "/ˈmɔːrnɪŋ/", "mañana"],
+        ["name", "/neɪm/", "nombre"],
+        ["nice", "/naɪs/", "agradable"],
+        ["meet", "/miːt/", "conocer"],
+        ["you", "/juː/", "tú / usted"]
+      ],
+      "sound": {
+        "ipa": "/iː/", "hint": "LONG vowel — say it with a smile.",
+        "line1": "meet · eat · sea   →   LONG vowel, stretch it",
+        "line2": "/ɪ/   sit · it · big   →   short vowel, quick and relaxed"
+      },
+      "grammar": {
+        "title": "Introduce yourself with  I am  and  My name is.",
+        "ex1": "I am Ana.          =   Yo soy Ana.",
+        "ex2": "My name is Ana.   =   Mi nombre es Ana.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   Hello! My name ", " Ana.", "is"],
+          ["2.   ", " to meet you!", "Nice"],
+          ["3.   Good ", "!  (in the morning)", "morning"]
+        ]
+      },
+      "phrase": { "en": "Nice to meet you.", "es": "Gusto en conocerte." }
+    },
+    {
+      "day": 2, "week": 1, "phase": "The Building Blocks",
+      "topic": "Greet at any time of day",
+      "words": [
+        ["afternoon", "/ˌæftərˈnuːn/", "tarde"],
+        ["evening", "/ˈiːvnɪŋ/", "noche temprana"],
+        ["night", "/naɪt/", "noche"],
+        ["please", "/pliːz/", "por favor"],
+        ["thank", "/θæŋk/", "agradecer"],
+        ["welcome", "/ˈwelkəm/", "bienvenido / a"],
+        ["much", "/mʌtʃ/", "mucho"]
+      ],
+      "sound": {
+        "ipa": "/eɪ/", "hint": "A moving vowel — starts as e, glides to i.",
+        "line1": "day · say · name   →   your mouth moves from e to i",
+        "line2": "/e/   bed · said · red   →   short, flat vowel"
+      },
+      "grammar": {
+        "title": "Good + the time of day:  Good morning / afternoon / evening / night.",
+        "ex1": "Good afternoon!          =   ¡Buenas tardes!",
+        "ex2": "Good night!  (to sleep)  =   ¡Buenas noches!",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   Good ", "!  (after 12 p.m.)", "afternoon"],
+          ["2.   ", " you very much!", "Thank"],
+          ["3.   You're ", ".  (respuesta a thank you)", "welcome"]
+        ]
+      },
+      "phrase": { "en": "Thank you very much.", "es": "Muchas gracias." }
+    },
+    {
+      "day": 3, "week": 1, "phase": "The Building Blocks",
+      "topic": "Ask how someone is",
+      "words": [
+        ["how", "/haʊ/", "cómo"],
+        ["are", "/ɑːr/", "eres / están"],
+        ["fine", "/faɪn/", "bien"],
+        ["thanks", "/θæŋks/", "gracias"],
+        ["today", "/təˈdeɪ/", "hoy"],
+        ["very", "/ˈveri/", "muy"],
+        ["okay", "/oʊˈkeɪ/", "bien / está bien"]
+      ],
+      "sound": {
+        "ipa": "/aʊ/", "hint": "A gliding vowel — a + u together.",
+        "line1": "how · now · out   →   open, then round your lips",
+        "line2": "/oʊ/   go · no · so   →   round and long"
+      },
+      "grammar": {
+        "title": "How are you? — I'm fine, thanks.  (I'm = I am)",
+        "ex1": "How are you today?   =   ¿Cómo estás hoy?",
+        "ex2": "I'm fine, thanks.     =   Estoy bien, gracias.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   How ", " you today?", "are"],
+          ["2.   I'm ", ", thanks. And you?", "fine"],
+          ["3.   ", " are you today?", "How"]
+        ]
+      },
+      "phrase": { "en": "How are you today?", "es": "¿Cómo estás hoy?" }
+    },
+    {
+      "day": 4, "week": 1, "phase": "The Building Blocks",
+      "topic": "Talk about your family",
+      "words": [
+        ["family", "/ˈfæməli/", "familia"],
+        ["mother", "/ˈmʌðər/", "madre"],
+        ["father", "/ˈfɑːðər/", "padre"],
+        ["brother", "/ˈbrʌðər/", "hermano"],
+        ["sister", "/ˈsɪstər/", "hermana"],
+        ["friend", "/frend/", "amigo / amiga"],
+        ["love", "/lʌv/", "amar / amor"]
+      ],
+      "sound": {
+        "ipa": "/ʌ/", "hint": "Short and soft — relax your mouth.",
+        "line1": "mother · brother · love   →   short, soft vowel",
+        "line2": "/uː/   you · food · blue   →   long, round vowel"
+      },
+      "grammar": {
+        "title": "This is  (one person)  /  These are  (more than one).",
+        "ex1": "This is my mother.        =   Esta es mi madre.",
+        "ex2": "These are my friends.    =   Estos son mis amigos.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   This is my ", ".", "mother"],
+          ["2.   ", " are my friends.", "These"],
+          ["3.   I ", " my family.", "love"]
+        ]
+      },
+      "phrase": { "en": "This is my family.", "es": "Esta es mi familia." }
+    },
+    {
+      "day": 5, "week": 1, "phase": "The Building Blocks",
+      "topic": "Where are you from?",
+      "words": [
+        ["where", "/wer/", "dónde"],
+        ["from", "/frʌm/", "de (origen)"],
+        ["country", "/ˈkʌntri/", "país"],
+        ["city", "/ˈsɪti/", "ciudad"],
+        ["live", "/lɪv/", "vivir"],
+        ["here", "/hɪr/", "aquí"],
+        ["home", "/hoʊm/", "casa / hogar"]
+      ],
+      "sound": {
+        "ipa": "/ə/", "hint": "The relaxed schwa — the lazy vowel.",
+        "line1": "country · today · about   →   soft, quick, relaxed",
+        "line2": "Every long vowel can become /ə/ in fast speech"
+      },
+      "grammar": {
+        "title": "I'm from  + your place.  (I'm from + ciudad/país)",
+        "ex1": "I'm from Caracas.            =   Soy de Caracas.",
+        "ex2": "I live in Florida now.      =   Vivo en Florida ahora.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   Where are you ", "?", "from"],
+          ["2.   I'm ", " Mexico City.", "from"],
+          ["3.   I ", " in Florida.", "live"]
+        ]
+      },
+      "phrase": { "en": "Where are you from?", "es": "¿De dónde eres?" }
+    },
+    {
+      "day": 6, "week": 1, "phase": "The Building Blocks",
+      "topic": "Your age and numbers 1-5",
+      "words": [
+        ["one", "/wʌn/", "uno"],
+        ["two", "/tuː/", "dos"],
+        ["three", "/θriː/", "tres"],
+        ["four", "/fɔːr/", "cuatro"],
+        ["five", "/faɪv/", "cinco"],
+        ["year", "/jɪr/", "año"],
+        ["old", "/oʊld/", "viejo / edad"]
+      ],
+      "sound": {
+        "ipa": "/θ/", "hint": "Put your tongue between your teeth!",
+        "line1": "three · thank · think   →   tongue between the teeth",
+        "line2": "/t/   tree · tank · ten   →   tongue behind the teeth"
+      },
+      "grammar": {
+        "title": "How old are you? — I'm 30 years old.",
+        "ex1": "How old are you?          =   ¿Cuántos años tienes?",
+        "ex2": "I'm thirty years old.    =   Tengo treinta años.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   How ", " are you?", "old"],
+          ["2.   I'm thirty ", " old.", "years"],
+          ["3.   I am ", " years old.  (escribe tu edad)", "your age"]
+        ]
+      },
+      "phrase": { "en": "I'm learning English.", "es": "Estoy aprendiendo inglés." }
+    },
+    {
+      "day": 7, "week": 1, "phase": "The Building Blocks",
+      "topic": "Week 1 review",
+      "words": [
+        ["review", "/rɪˈvjuː/", "repaso"],
+        ["week", "/wiːk/", "semana"],
+        ["every", "/ˈevri/", "cada / todos"],
+        ["day", "/deɪ/", "día"],
+        ["word", "/wɜːrd/", "palabra"],
+        ["again", "/əˈɡen/", "otra vez"],
+        ["little", "/ˈlɪtl/", "pequeño / poco"]
+      ],
+      "sound": {
+        "ipa": "review", "hint": "The four sounds of your first week.",
+        "line1": "/iː/ meet    /aʊ/ how    /θ/ three    /ə/ country",
+        "line2": "Say each one out loud one more time — you own them now."
+      },
+      "grammar": {
+        "title": "Week 1 in review:  I am · My name is · This is · I'm from.",
+        "ex1": "Hello! My name is Ana.         =   ¡Hola! Mi nombre es Ana.",
+        "ex2": "This is my family. I'm from Caracas.   =   Esta es mi familia. Soy de Caracas.",
+        "intro": "Complete the sentences:",
+        "exercises": [
+          ["1.   Hello! My ", " is Ana.", "name"],
+          ["2.   How are ", " today?", "you"],
+          ["3.   I'm ", " Venezuela.", "from"]
+        ]
+      },
+      "phrase": { "en": "One step at a time.", "es": "Un paso a la vez." }
+    }
+  ]
+}

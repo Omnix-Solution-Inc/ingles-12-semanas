@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inglés 12 Semanas</title>
+<meta name="theme-color" content="#F7DE7A">
+<link rel="icon" href="./icon_192.png">
+<style>
+:root{
+  --butter:#F7DE7A; --butter-deep:#8A6D1F; --lime:#A9C23D; --lime-light:#F2F7DE;
+  --kaki:#C77A38; --kaki-soft:#D2894A; --ink:#3A3620; --gray:#857E5E; --bg:#FFFBEE; --card:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:60px}
+.wrap{max-width:520px;margin:0 auto;padding:0 18px}
+header{padding:calc(18px + env(safe-area-inset-top)) 0 4px}
+.brand{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--kaki);text-transform:uppercase}
+h1{font-family:Georgia,'Times New Roman',serif;font-size:34px;margin-top:6px}
+.sub{font-size:14px;color:var(--gray);margin-top:2px}
+.chips{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.chip{border-radius:24px;padding:8px 16px;font-size:13px;font-weight:600}
+.chip.b{background:var(--butter)} .chip.l{background:var(--lime-light);color:var(--kaki)}
+.namebox{margin-top:12px}
+.namebox input{border:none;border-bottom:1.5px solid #D6CFAE;background:transparent;padding:6px 2px;font-size:13px;color:var(--ink);outline:none;width:160px}
+.card{background:var(--card);border-radius:18px;padding:16px 18px;margin-top:14px;box-shadow:0 2px 10px rgba(58,54,32,.06)}
+.card h2{font-size:11px;letter-spacing:1.6px;color:var(--kaki);font-weight:700;text-transform:uppercase}
+.card .note{font-size:12.5px;color:var(--gray);margin-top:3px}
+.wrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EBD3}
+.wrow:last-of-type{border-bottom:none}
+.wrow .en{font-size:18px;font-weight:600}
+.wrow .ipa{font-size:11px;color:var(--gray)}
+.wrow .es{font-size:12.5px;color:var(--gray);margin-top:1px}
+.play{width:38px;height:38px;border-radius:50%;border:none;background:var(--lime-light);color:var(--kaki);font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.play:active{transform:scale(.92)}
+.big{font-size:19px;font-weight:700;margin-top:8px}
+.big .ipa{color:var(--kaki)}
+.hint{font-size:13px;color:var(--gray);margin-top:5px;line-height:1.5}
+.gbox{background:var(--lime-light);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px;line-height:1.6}
+.gbox .es{color:var(--gray)}
+.quote{border-left:4px solid var(--kaki-soft);padding-left:12px;margin-top:10px}
+.quote .q{font-family:Georgia,serif;font-size:19px}
+.quote .t{font-size:13px;color:var(--gray);margin-top:2px}
+.btn{display:block;width:100%;border:none;border-radius:24px;padding:16px;font-size:15.5px;font-weight:700;cursor:pointer;margin-top:18px;text-align:center;text-decoration:none}
+.btn.k{background:var(--kaki);color:#fff}
+.feel{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.flabel{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
+.flabel input{width:18px;height:18px;accent-color:var(--kaki)}
+.done{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:14.5px;font-weight:600}
+.done input{width:20px;height:20px;accent-color:var(--kaki-soft)}
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center}
+.tomorrow{background:var(--lime-light);border-radius:18px;padding:26px 18px;margin-top:16px;text-align:center}
+.tomorrow .em{font-size:34px}
+.tomorrow p{font-size:14px;color:var(--kaki);margin-top:8px;line-height:1.5;font-weight:600}
+.footer{text-align:center;font-size:11.5px;color:var(--gray);margin-top:26px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">Inglés 12 Semanas</div>
+  <h1 id="greet">Your day</h1>
+  <div class="sub" id="sub">Loading your plan…</div>
+  <div class="chips">
+    <span class="chip b">🔥 <span id="streak"></span></span>
+    <span class="chip l" id="prog"></span>
+  </div>
+  <div class="namebox"><input id="nameIn" placeholder="Your name"></div>
+</header>
+<div id="content"></div>
+<div class="footer">Inglés 12 Semanas · A new day of your plan is served automatically, every morning.<br>12 weeks · 84 days · Phase 1: The Building Blocks</div>
+</div>
+<div id="toast"></div>
+<script>
+const DAY_MS=864e5;
+let DAYS=[];
+function $(id){return document.getElementById(id)}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function toast(m,ms=2200){const t=$('toast');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,ms)}
+function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast('Audio not available')}}
+// fecha de inicio: primera visita
+let start=localStorage.getItem('i12_start');
+if(!start){start=new Date().toDateString();localStorage.setItem('i12_start',start)}
+const startDate=new Date(start);
+function dayNumber(){return Math.min(Math.floor((Date.now()-startDate.getTime())/DAY_MS)+1,84)}
+// racha
+const today=new Date().toDateString();
+let s=JSON.parse(localStorage.getItem('i12s')||'{}');
+if(s.last!==today){const y=new Date(Date.now()-864e5).toDateString();s={count:(s.last===y?(s.count||0):0)+1,last:today};localStorage.setItem('i12s',JSON.stringify(s))}
+$('streak').textContent='Streak: '+s.count+(s.count>1?' days':' day');
+// nombre
+const ni=$('nameIn');ni.value=localStorage.getItem('i12n')||'';
+ni.oninput=()=>{localStorage.setItem('i12n',ni.value);greet()}
+function greet(){const n=(localStorage.getItem('i12n')||'').trim();$('greet').textContent=n?'Hi, '+n+'!':'Your day'}
+greet();
+fetch('./content/days.json?v='+Date.now()).then(r=>r.json()).then(D=>{DAYS=D.days;render()}).catch(()=>{$('sub').textContent='Could not load content — check your connection.'});
+function render(){
+  const dn=dayNumber();
+  const d=DAYS.find(x=>x.day===dn);
+  $('prog').textContent='Progress '+Math.round((dn-1)/84*100)+'%';
+  if(!d){
+    $('sub').textContent='Day '+dn+' of 84 · Week '+Math.ceil(dn/7);
+    $('content').innerHTML='<div class="tomorrow"><div class="em">🌱</div><p>Day '+dn+' is being prepared.<br>New content is served automatically — open this page again tomorrow morning.</p></div>';
+    return;
+  }
+  $('sub').textContent='Day '+d.day+' of 84 · Week '+d.week+' · '+d.phase;
+  let h='';
+  h+='<section class="card"><h2>Words of the day</h2><div class="note">7 new words · Tap ▶ to hear each one</div>';
+  d.words.forEach(w=>{h+=`<div class="wrow"><div><div class="en">${esc(w[0])} <span class="ipa">${esc(w[1])}</span></div><div class="es">${esc(w[2])}</div></div><button class="play" onclick="say('${esc(w[0])}')">▶</button></div>`});
+  h+='</section>';
+  h+=`<section class="card"><h2>Sound of the day</h2><div class="big"><span class="ipa">${esc(d.sound.ipa)}</span></div><div class="hint">${esc(d.sound.hint)}<br>${esc(d.sound.line1)}<br>${esc(d.sound.line2)}</div><button class="play" style="margin-top:10px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
+  h+=`<section class="card"><h2>Grammar in 5 minutes</h2><div class="big" style="font-size:16.5px">${esc(d.grammar.title)}</div><div class="gbox">${esc(d.grammar.ex1)}<br>${esc(d.grammar.ex2)}</div></section>`;
+  h+=`<section class="card"><h2>Phrase of the day</h2><div class="quote"><div class="q">"${esc(d.phrase.en)}"</div><div class="t">${esc(d.phrase.es)}</div></div><button class="play" style="margin-top:12px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
+  h+=`<section class="card"><h2>How did you feel today?</h2><div class="note">Mark one and celebrate your day.</div><div class="feel" id="feel">
+    <label class="flabel"><input type="radio" name="f" value="Great">Great</label>
+    <label class="flabel"><input type="radio" name="f" value="Okay">Okay</label>
+    <label class="flabel"><input type="radio" name="f" value="It was hard">It was hard</label></div>
+    <label class="done"><input type="checkbox" id="done">Day ${d.day} complete</label></section>`;
+  h+=`<a class="btn k" href="./hojas/hoja-dia-${String(d.day).padStart(2,'0')}.pdf" target="_blank">⬇ Open today's worksheet (PDF)</a>`;
+  $('content').innerHTML=h;
+  // feel + done persistentes por día
+  const fk='i12feel_'+d.day, dk='i12done_'+d.day;
+  document.querySelectorAll('#feel input').forEach(r=>{r.onchange=()=>{localStorage.setItem(fk,r.value);toast('Marked: '+r.value)}});
+  const saved=localStorage.getItem(fk);if(saved){const e=document.querySelector(`#feel input[value="${saved}"]`);if(e)e.checked=true}
+  const dc=$('done');dc.checked=localStorage.getItem(dk)==='1';
+  dc.onchange=()=>{localStorage.setItem(dk,dc.checked?'1':'0');if(dc.checked)toast('Day '+d.day+' complete! New content arrives tomorrow 🌻');upd()};
+  function upd(){} // progreso ya mostrado arriba por días
+}
+</script>
+</body>
+</html>
