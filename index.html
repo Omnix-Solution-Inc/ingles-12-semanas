@@ -108,7 +108,7 @@ function render(){
   $('prog').textContent='Progress '+Math.round(completedCount()/84*100)+'%';
   if(!d){
     $('sub').textContent='Day '+dn+' of 84 · Week '+Math.ceil(dn/7);
-    $('content').innerHTML='<div class="tomorrow"><div class="em">🌱</div><p>Day '+dn+' is being prepared for you.<br>Content is served automatically — refresh this page in a moment.</p></div>';
+    $('content').innerHTML='<div class="tomorrow"><div class="em">🌱</div><p>Day '+dn+' is being prepared for you.<br>Content is served automatically — refresh this page in a little while.</p></div>';
     return;
   }
   $('sub').textContent='Day '+d.day+' of 84 · Week '+d.week+' · '+d.phase;

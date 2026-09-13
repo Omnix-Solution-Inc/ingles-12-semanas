@@ -86,8 +86,8 @@ def build_day(d, outdir):
     s = d['sound']
     y = section(c, y, 2, 'Sound of the day', 'Phonetics: ' + s['ipa'] + ' — ' + s['hint'])
     c.setFillColor(TEAL); c.setFont('InterB', 12); c.drawString(58, y-10, s['ipa'])
-    c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(84, y-10, s['line1'].split('→')[0].strip() + '   →')
-    c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(140, y-10, s['line1'])
+    ipa_w = pdfmetrics.stringWidth(s['ipa'], 'InterB', 12)
+    c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(58 + ipa_w + 10, y-10, s['line1'])
     c.setFillColor(GRAY); c.setFont('Inter', 10); c.drawString(84, y-24, s['line2'])
     c.setFillColor(INK); c.setFont('Inter', 10)
     c.drawString(58, y-40, f'Say this phrase out loud 5 times:  "{d["phrase"]["en"]}"')
