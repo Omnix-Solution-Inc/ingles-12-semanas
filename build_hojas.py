@@ -119,8 +119,52 @@ def build_day(d, outdir):
     hline(c, 64, W-70, y-58)
     field(c, 'phrase_copy', 64, y-58, W-134, 16, 'Type the phrase of the day', 11)
     y -= 74
-    # 5. AUTOEVALUACIÓN
-    y = section(c, y, 5, 'How did you feel today?', 'Mark one and celebrate your Day 1.' if d['day']==1 else 'Mark one and celebrate your day.')
+    # ===== PÁGINA 2 — PRÁCTICA: HABLAR Y ESCRIBIR =====
+    c.showPage()
+    c.setFillColor(SAND); c.rect(0, 0, W, H, fill=1, stroke=0)
+    c.setFillColor(BUTTER); c.rect(0, H-92, W, 92, fill=1, stroke=0)
+    c.setFillColor(INK); c.setFont('PlayB', 20)
+    c.drawString(48, H-48, f'Day {d["day"]} of 84 — Practice')
+    c.setFillColor(BUTTER_DEEP); c.setFont('Inter', 10)
+    c.drawString(48, H-68, 'SPEAK A LITTLE, WRITE A LITTLE — EVERY SINGLE DAY')
+    c.setFillColor(INK); c.setFont('PlaySB', 12); c.drawRightString(W-48, H-48, 'Inglés 12 Semanas')
+    c.setFillColor(LIME); c.rect(48, H-82, W-96, 2.4, fill=1, stroke=0)
+    y = H-122
+    pr = d['practice']
+    # 5. SPEAK TODAY
+    y = section(c, y, 5, 'Speak today', 'Say it out loud — check each one as you say it.')
+    for i, task in enumerate(pr['speak']):
+        yy = y - 8 - i*28
+        c.acroForm.checkbox(name=f'speak{i+1}', checked=False, x=58, y=yy-3, size=13,
+            buttonStyle='check', borderWidth=1.2, borderColor=TEAL, fillColor=None, textColor=TEAL,
+            tooltip='Check when you said it out loud')
+        c.setFillColor(INK); c.setFont('Inter', 10)
+        import textwrap
+        lines = textwrap.wrap(task, 82)
+        c.drawString(80, yy, lines[0])
+        for extra in lines[1:]:
+            yy -= 13
+            c.drawString(80, yy, extra)
+    y = y - 8 - len(pr['speak'])*28 - 10
+    # 6. WRITE TODAY
+    y = section(c, y, 6, 'Write today', 'Translate and create — real writing, every day.')
+    c.setFillColor(TEAL); c.setFont('InterB', 10.5); c.drawString(58, y-6, 'Translate to English:')
+    yy = y - 24
+    for i, tr in enumerate(pr['translate']):
+        c.setFillColor(GRAY); c.setFont('Inter', 10.5); c.drawString(66, yy, tr[0])
+        hline(c, 230, W-70, yy-2)
+        field(c, f'tr{i+1}', 230, yy-2, W-300, 15, 'Write it in English')
+        yy -= 28
+    c.setFillColor(TEAL); c.setFont('InterB', 10.5); c.drawString(58, yy, 'Your turn to create:')
+    c.setFillColor(INK); c.setFont('Inter', 10); c.drawString(66, yy-16, pr['write'])
+    yy -= 33
+    for i in range(3):
+        hline(c, 66, W-70, yy-2)
+        field(c, f'free{i+1}', 66, yy-2, W-136, 15, 'Write your sentences here')
+        yy -= 24
+    y = yy - 4
+    # 7. FEEL
+    y = section(c, y, 7, 'How did you feel today?', 'Mark one and celebrate your day.')
     opts = [('feel', 'great', 'Great'), ('feel', 'okay', 'Okay'), ('feel', 'hard', 'It was hard')]
     ox = 58
     for gname, val, label in opts:

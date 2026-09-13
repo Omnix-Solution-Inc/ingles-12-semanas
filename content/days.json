@@ -76,6 +76,24 @@
       "phrase": {
         "en": "Nice to meet you.",
         "es": "Gusto en conocerte."
+      },
+      "practice": {
+        "speak": [
+          "Say your full name out loud: 'My name is ...'. Repeat it 3 times.",
+          "Introduce yourself out loud in 3 short sentences: your name, your city, one thing about you.",
+          "Say the phrase of the day to someone today — or say it to your mirror."
+        ],
+        "translate": [
+          [
+            "Mi nombre es Ana.",
+            "My name is Ana."
+          ],
+          [
+            "Hola, soy de Venezuela.",
+            "Hello, I am from Venezuela."
+          ]
+        ],
+        "write": "Write 2 sentences about you: your name and one thing you like."
       }
     },
     {
@@ -152,6 +170,24 @@
       "phrase": {
         "en": "Thank you very much.",
         "es": "Muchas gracias."
+      },
+      "practice": {
+        "speak": [
+          "Greet 3 people today using the right time of day: morning, afternoon or evening.",
+          "Say out loud: 'Good evening! How are you?'",
+          "Thank someone out loud today: 'Thank you very much.'"
+        ],
+        "translate": [
+          [
+            "Buenas tardes.",
+            "Good afternoon."
+          ],
+          [
+            "Gracias, eres muy amable.",
+            "Thank you, you are very kind."
+          ]
+        ],
+        "write": "Write the greeting you will use tomorrow, morning and night."
       }
     },
     {
@@ -228,6 +264,24 @@
       "phrase": {
         "en": "How are you today?",
         "es": "¿Cómo estás hoy?"
+      },
+      "practice": {
+        "speak": [
+          "Ask someone out loud: 'How are you today?'",
+          "Answer about yourself, out loud: 'I'm fine, thanks. And you?'",
+          "Have a real 30-second conversation: greeting + how are you + thank you."
+        ],
+        "translate": [
+          [
+            "¿Cómo estás hoy?",
+            "How are you today?"
+          ],
+          [
+            "Estoy bien, gracias.",
+            "I'm fine, thanks."
+          ]
+        ],
+        "write": "Write a 3-line mini conversation: a greeting, how are you, and a goodbye."
       }
     },
     {
@@ -304,6 +358,24 @@
       "phrase": {
         "en": "This is my family.",
         "es": "Esta es mi familia."
+      },
+      "practice": {
+        "speak": [
+          "Present your family out loud: 'This is my mother. This is my brother.'",
+          "Say 3 sentences out loud about people you love.",
+          "Describe a friend out loud in 2 complete sentences."
+        ],
+        "translate": [
+          [
+            "Esta es mi familia.",
+            "This is my family."
+          ],
+          [
+            "Ella es mi hermana.",
+            "She is my sister."
+          ]
+        ],
+        "write": "Write 3 sentences about your family using 'This is' and 'These are'."
       }
     },
     {
@@ -380,6 +452,24 @@
       "phrase": {
         "en": "Where are you from?",
         "es": "¿De dónde eres?"
+      },
+      "practice": {
+        "speak": [
+          "Say out loud where you are from: 'I'm from ...'.",
+          "Say out loud where you live now: 'I live in ...'.",
+          "Ask someone: 'Where are you from?' — and really listen to the answer."
+        ],
+        "translate": [
+          [
+            "¿De dónde eres?",
+            "Where are you from?"
+          ],
+          [
+            "Soy de México.",
+            "I'm from Mexico."
+          ]
+        ],
+        "write": "Write 3 sentences: where you are from, where you live, and one thing you love about it."
       }
     },
     {
@@ -456,6 +546,24 @@
       "phrase": {
         "en": "I'm learning English.",
         "es": "Estoy aprendiendo inglés."
+      },
+      "practice": {
+        "speak": [
+          "Say your age out loud: 'I'm ... years old.'",
+          "Count out loud from one to five — three times, nice and slow.",
+          "Ask someone out loud: 'How old are you?'"
+        ],
+        "translate": [
+          [
+            "Tengo treinta años.",
+            "I'm thirty years old."
+          ],
+          [
+            "¿Cuántos años tienes?",
+            "How old are you?"
+          ]
+        ],
+        "write": "Write 2 sentences with numbers: your age and the age of someone you love."
       }
     },
     {
@@ -532,6 +640,24 @@
       "phrase": {
         "en": "One step at a time.",
         "es": "Un paso a la vez."
+      },
+      "practice": {
+        "speak": [
+          "Introduce yourself completely out loud: name, age, city, family — 5 sentences.",
+          "Record a 30-second voice note on your phone introducing yourself in English — listen to it.",
+          "Say the 4 sounds of the week out loud one more time."
+        ],
+        "translate": [
+          [
+            "Hola, mi nombre es Ana.",
+            "Hello, my name is Ana."
+          ],
+          [
+            "Soy de Venezuela y vivo en Florida.",
+            "I'm from Venezuela and I live in Florida."
+          ]
+        ],
+        "write": "Write 5 sentences about you — everything you learned this week."
       }
     }
   ]
