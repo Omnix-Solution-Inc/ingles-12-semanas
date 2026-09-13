@@ -1,0 +1,16 @@
+{
+  "name": "Inglés 12 Semanas",
+  "short_name": "Inglés 12",
+  "description": "Your daily English plan — vocabulary, sounds, grammar and a daily worksheet. 12 weeks · 84 days.",
+  "lang": "en",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFBEE",
+  "theme_color": "#F7DE7A",
+  "start_url": "./",
+  "scope": "./",
+  "icons": [
+    {"src": "./icon_192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "./icon_512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
