@@ -180,7 +180,7 @@ function mgFlip(i){
   el.textContent=c.txt;el.classList.remove('down');
   MG.open.push(i);
   if(MG.open.length===2){
-    MG.tries++;MG.lock=true;
+    MG.tries++;MG.lock=true;$('mgstat').textContent='Tries: '+MG.tries;
     const [a,b]=MG.open;
     if(MG.cards[a].pair===MG.cards[b].pair){
       setTimeout(()=>{
