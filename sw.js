@@ -1,5 +1,5 @@
 /* Inglés 12 Semanas — service worker: red primero (se autoalimenta) con respaldo sin conexión */
-const C = 'ing12-v2';
+const C = 'ing12-v3';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C).then(c => c.addAll(['./', './index.html', './icon_192.png', './icon_512.png'])));
 });

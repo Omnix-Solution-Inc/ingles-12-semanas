@@ -72,6 +72,23 @@ h1{font-family:Georgia,'Times New Roman',serif;font-size:34px;margin-top:6px}
 .exrow{margin-top:12px}
 .fb{margin-top:7px;font-weight:700;font-size:13px}
 .fb.ok{color:var(--kaki)} .fb.no{color:#A34E1F}
+
+.tabs{display:flex;gap:8px;margin-top:14px}
+.tabbtn{flex:1;padding:11px;border-radius:14px;border:1.5px solid #E8E0C4;background:#fff;color:var(--kaki);font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit}
+.tabbtn.on{background:var(--lime-light);border-color:var(--kaki-soft)}
+.mggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mgcard{min-height:62px;border-radius:12px;border:1.5px solid #E8E0C4;background:#fff;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:6px;text-align:center;line-height:1.25;font-family:inherit}
+.mgcard.down{background:var(--butter);border-color:var(--butter-deep)}
+.mgcard.matched{background:var(--lime-light);border-color:var(--lime);color:var(--kaki);cursor:default}
+.tap{display:inline-flex;align-items:center;margin:3px 4px 0 0;padding:7px 12px;font-size:12.5px;border-radius:14px;border:1.5px solid var(--lime);background:var(--lime-light);color:var(--kaki);font-weight:700;cursor:pointer;font-family:inherit}
+.tap:active{transform:scale(.94)}
+.toolrow{padding:10px 0;border-bottom:1px solid #F0EBD3}
+.toolrow:last-of-type{border-bottom:none}
+.toolrow .tt{font-size:14px;font-weight:700}
+.toolrow .td{font-size:12.5px;color:var(--gray);margin-top:1px}
+.playrow{display:flex;gap:10px;margin-top:12px}
+.playrow .play{margin-top:0}
+
 </style>
 </head>
 <body>
@@ -84,9 +101,11 @@ h1{font-family:Georgia,'Times New Roman',serif;font-size:34px;margin-top:6px}
     <span class="chip b">🔥 <span id="streak"></span></span>
     <span class="chip l" id="prog"></span>
   </div>
+  <div class="tabs"><button id="tabToday" class="tabbtn on" onclick="showTab('today')">☀ Today</button><button id="tabTools" class="tabbtn" onclick="showTab('tools')">✦ Power tools</button></div>
   <div class="namebox"><input id="nameIn" placeholder="Your name"></div>
 </header>
 <div id="content"></div>
+<div id="tools" style="display:none"></div>
 <div class="footer">Inglés 12 Semanas · Speak a little, write a little — every day, saved as you go.<br>12 weeks · 84 days · Phase 1: The Building Blocks</div>
 </div>
 <div id="toast"></div>
@@ -96,7 +115,150 @@ let DAYS=[];
 function $(id){return document.getElementById(id)}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function toast(m,ms=2200){const t=$('toast');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,ms)}
-function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast('Audio not available')}}
+// --- voz natural: escoge la mejor voz de inglés disponible (no la robótica por defecto) ---
+let VOICES=null,BESTV=null;
+function scoreVoice(v){
+  let s=0;const n=(v.name||''),l=(v.lang||'');
+  if(/^(en[-_]US|en)$/i.test(l)||l==='en-US')s+=4;else if(/^en/i.test(l))s+=2;else return -99;
+  if(/Google US English/i.test(n))s+=6;
+  else if(/Google.*English/i.test(n))s+=5;
+  if(/(Natural|Neural|Online)/i.test(n))s+=5;
+  if(/(Aria|Jenny|Guy|Ana|Sonia|Libby|Emma|Brian|Christopher|Michelle|Ava|Allison|Nathan|Zoe)/i.test(n))s+=3;
+  if(/(Samantha|Eva|Daniel|Karen|Moira|Tessa|Serena|Aaron|Siri)/i.test(n))s+=3;
+  if(/(eSpeak|espeak|festival|pico|compact|Robot)/i.test(n))s-=20;
+  if(/(David|Zira|Mark|Hazel|George|Susan|Sam)/i.test(n))s-=8;
+  if(v.localService===false)s+=1;
+  return s;
+}
+function loadVoices(){VOICES=speechSynthesis.getVoices();BESTV=VOICES.slice().sort((a,b)=>scoreVoice(b)-scoreVoice(a))[0]||null}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+function say(t){try{
+  if(!('speechSynthesis' in window)){toast('Audio not available');return}
+  if(!VOICES||!VOICES.length)loadVoices();
+  const u=new SpeechSynthesisUtterance(t);
+  if(BESTV){u.voice=BESTV;u.lang=BESTV.lang}else{u.lang='en-US'}
+  u.rate=0.92;u.pitch=1;u.volume=1;
+  if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(()=>speechSynthesis.speak(u),60)}
+  else{speechSynthesis.speak(u)}
+}catch(e){toast('Audio not available')}}
+// audio lento (tortuga)
+function saySlow(t){try{
+  if(!('speechSynthesis' in window)){toast('Audio not available');return}
+  if(!VOICES||!VOICES.length)loadVoices();
+  const u=new SpeechSynthesisUtterance(t);
+  if(BESTV){u.voice=BESTV;u.lang=BESTV.lang}else{u.lang='en-US'}
+  u.rate=0.72;u.pitch=1;u.volume=1;
+  if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(()=>speechSynthesis.speak(u),60)}
+  else{speechSynthesis.speak(u)}
+}catch(e){toast('Audio not available')}}
+// pestañas hoy / power tools
+function showTab(t){
+  const isToday=(t==='today');
+  $('content').style.display=isToday?'':'none';
+  $('tools').style.display=isToday?'none':'';
+  $('tabToday').classList.toggle('on',isToday);
+  $('tabTools').classList.toggle('on',!isToday);
+  if(!isToday&&!TOOLS_READY)renderTools();
+  window.scrollTo(0,0);
+}
+// ===== juego de memoria (gamificación TDAH: pares táctiles, picos de atención cortos) =====
+let MG=null;
+function mgHTML(d){
+  const cards=[];
+  d.words.forEach((w,i)=>{cards.push({txt:w[0],pair:i});cards.push({txt:w[2],pair:i})});
+  for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]]}
+  MG={cards,open:[],matched:0,tries:0,lock:false};
+  let h='<section class="card"><h2>Memory game</h2><div class="note">Flip two cards, find the English–Spanish pairs. Short focus bursts — your brain loves this.</div><div class="esh">Voltea dos tarjetas y encuentra los pares inglés–español.</div><div class="mggrid">';
+  cards.forEach((c,i)=>{h+='<button class="mgcard down" id="mgc'+i+'" onclick="mgFlip('+i+')">🌻</button>'});
+  h+='</div><div class="note" id="mgstat" style="margin-top:8px">Tries: 0</div><button class="mini" onclick="mgReset()">↺ Shuffle and play again</button></section>';
+  return h;
+}
+function mgFlip(i){
+  if(!MG||MG.lock)return;
+  const el=$('mgc'+i),c=MG.cards[i];
+  if(el.classList.contains('matched')||MG.open.includes(i))return;
+  el.textContent=c.txt;el.classList.remove('down');
+  MG.open.push(i);
+  if(MG.open.length===2){
+    MG.tries++;MG.lock=true;
+    const [a,b]=MG.open;
+    if(MG.cards[a].pair===MG.cards[b].pair){
+      setTimeout(()=>{
+        $('mgc'+a).classList.add('matched'); $('mgc'+b).classList.add('matched');
+        MG.matched++;MG.open=[];MG.lock=false;
+        $('mgstat').textContent='Tries: '+MG.tries+(MG.matched===7?' — All matched! 🎉':'');
+        if(MG.matched===7){toast('All matched — brilliant! 🌻');say(' Brilliant! ')}
+      },350);
+    }else{
+      setTimeout(()=>{
+        $('mgc'+a).classList.add('down');$('mgc'+a).textContent='🌻';
+        $('mgc'+b).classList.add('down');$('mgc'+b).textContent='🌻';
+        MG.open=[];MG.lock=false;
+        $('mgstat').textContent='Tries: '+MG.tries;
+      },800);
+    }
+  }
+}
+function mgReset(){
+  const d=DAYS.find(x=>x.day===dayNumber());
+  if(!d)return;
+  const wrap=document.createElement('div');wrap.innerHTML=mgHTML(d);
+  const grid=wrap.querySelector('.mggrid'),old=document.querySelector('.mggrid');
+  if(old&&grid){old.innerHTML=grid.innerHTML}
+  $('mgstat').textContent='Tries: 0';
+}
+// ===== power tools: reglas de oro, motores, phrasal verbs, idioms, anclajes y rutina =====
+let TOOLS_READY=false;
+function tap(w,label){return '<button class="tap" data-w="'+w+'" onclick="say(this.dataset.w)">'+(label||w)+' ▶</button>'}
+function trw(t,d){return '<div class="toolrow"><div class="tt">'+t+'</div><div class="td">'+d+'</div></div>'}
+function renderTools(){
+  let h='';
+  h+='<section class="card"><h2>Golden rules of pronunciation</h2><div class="note">Tap any word to hear it — feel the sound in your mouth.</div><div class="esh">Toca cualquier palabra para escucharla.</div>';
+  h+='<div class="toolrow"><div class="tt">Magic E</div><div class="td">A word ends in e? The vowel inside says its name — the final e is silent.</div>'+tap('cake')+tap('bike')+tap('note')+tap('cute')+'</div>';
+  h+='<div class="toolrow"><div class="tt">Short vs long vowels</div><div class="td">Short: trapped between consonants (cat, sit). Long: it says its own name (cake, site).</div>'+tap('cat')+tap('cake')+tap('sit')+tap('site')+'</div>';
+  h+='<div class="toolrow"><div class="tt">Schwa /ə/</div><div class="td">The most common sound in English — totally relaxed and neutral.</div>'+tap('the')+tap('about')+tap('banana')+'</div>';
+  h+='<div class="toolrow"><div class="tt">L vs R</div><div class="td">Loosen your jaw and lips — feel where your tongue lands.</div>'+tap('alive')+tap('arrive')+tap('light')+tap('right')+'</div>';
+  h+='<div class="toolrow"><div class="tt">The puff of air</div><div class="td">P, T and K at the start of a syllable release a little explosion of air.</div>'+tap('pen')+tap('ten')+tap('key')+'</div>';
+  h+='</section>';
+  h+='<section class="card"><h2>The Lego rule</h2><div class="note">English stacks in strict order — that is why it feels light on your memory.</div>';
+  h+='<div class="toolrow"><div class="tt">Subject + Verb + Object</div><div class="td">Every affirmative sentence follows the same pattern.</div>'+tap('I speak English.')+'</div>';
+  h+='<div class="toolrow"><div class="tt">No gender, ever</div><div class="td">The book, the house, the world — never masculine or feminine.</div>'+tap('the book')+tap('the house')+tap('the world')+'</div>';
+  h+='<div class="toolrow"><div class="tt">Third person -s</div><div class="td">The only change in the present: he, she, it add -s.</div>'+tap('He works every day.')+tap('She does it well.')+'</div>';
+  h+='<div class="toolrow"><div class="tt">Direct negation</div><div class="td">Insert don\u2019t (or doesn\u2019t) before the main verb.</div>'+tap('I don\u2019t like tea.')+tap('She doesn\u2019t like coffee.')+'</div>';
+  h+='</section>';
+  h+='<section class="card"><h2>The 6 engines</h2><div class="note">Master these first — you can survive any conversation with them.</div>';
+  h+=trw('be — ser / estar','The motor of identity: I am, you are, she is.');
+  h+='<div style="margin-top:-6px">'+tap('I am happy')+tap('She is ready')+'</div>';
+  h+=trw('have — tener','You have, we have, they have.');
+  h+='<div style="margin-top:-6px">'+tap('You have a call')+'</div>';
+  h+=trw('do — hacer','Also your question and negation helper.');
+  h+='<div style="margin-top:-6px">'+tap('We do it now')+'</div>';
+  h+=trw('go — ir','Movement and future plans: going to.');
+  h+='<div style="margin-top:-6px">'+tap('They go to school')+'</div>';
+  h+=trw('want — querer','What your heart asks for.');
+  h+='<div style="margin-top:-6px">'+tap('I want coffee')+'</div>';
+  h+=trw('like — gustar / querer','What you enjoy.');
+  h+='<div style="margin-top:-6px">'+tap('She likes music')+'</div>';
+  h+='</section>';
+  h+='<section class="card"><h2>Phrasal verbs you will use today</h2><div class="note">Learn them as one single block of vocabulary.</div><div class="esh">Apréndete cada uno como una sola palabra.</div>';
+  const pv=[['Get up','levantarse'],['Wake up','despertarse'],['Go out','salir de marcha'],['Look for','buscar'],['Give up','rendirse'],['Turn on','prender'],['Turn off','apagar'],['Sit down','sentarse']];
+  pv.forEach(p=>{h+='<div class="wrow"><div><div class="en">'+tap(p[0])+'</div><div class="es">'+p[1]+'</div></div></div>'});
+  h+='</section>';
+  h+='<section class="card"><h2>Idioms with punch</h2><div class="note">Native flavor — stop translating literally and own these.</div>';
+  const idm=[['In the nick of time','justo a tiempo, por los pelos'],['When pigs fly','cuando las ranas críen pelo'],['Cold turkey','dejar algo de golpe y sin ayuda'],['Up to my eyeballs','estar hasta arriba de trabajo'],['Break the ice','romper el hielo'],['Hang in there','mantente firme, no te rindas']];
+  idm.forEach(p=>{h+='<div class="wrow"><div><div class="en">'+tap(p[0])+'</div><div class="es">'+p[1]+'</div></div></div>'});
+  h+='</section>';
+  h+='<section class="card"><h2>Post-it anchors</h2><div class="note">Write these on post-its and place them around your home — passive reading sticks with zero effort.</div><div class="esh">Pega notas en tu casa — la lectura pasiva se queda sola.</div>';
+  h+=tap("Don't forget your keys",'Door')+tap("What's to eat?",'Kitchen')+tap('Time to drink water','Fridge')+tap('Turn off the light','Switch')+tap('Have a great day','Mirror');
+  h+='</section>';
+  h+='<section class="card"><h2>Your 15-minute routine</h2><div class="note">Built for focus that comes in waves — one capsule a day, every day.</div><div class="esh">Cápsulas de atención cortas: una al día, todos los días.</div>';
+  h+='<div class="gbox">1. See today\u2019s words (2 min)<br>2. Say them out loud with \u25B6 (5 min)<br>3. Play the memory game (3 min)<br>4. Write today (5 min)</div>';
+  h+='<div class="toolrow" style="border:none;padding-top:14px"><div class="tt">Shadow trick</div><div class="td">Record yourself reading today\u2019s phrase on your phone, leave 5 seconds of silence, play it back and say the Spanish in the gap.</div></div>';
+  h+='<div class="quote" style="margin-top:12px"><div class="q">Connection beats perfection.</div><div class="t">Contractions and slang are real English — you are building a bridge, not an exam.</div></div>';
+  h+='</section>';
+  $('tools').innerHTML=h;
+  TOOLS_READY=true;
+}
 // los días se liberan mientras avanzas: completa un día → se desbloquea el siguiente
 function dayNumber(){
   let n=1;
@@ -129,6 +291,7 @@ function render(){
   h+='<section class="card"><h2>Words of the day</h2><div class="note">7 new words · Tap ▶ to hear each one</div><div class="esh">Toca ▶ para escuchar cada palabra.</div>';
   d.words.forEach(w=>{h+=`<div class="wrow"><div><div class="en">${esc(w[0])} <span class="ipa">${esc(w[1])}</span></div><div class="es">${esc(w[2])}</div></div><button class="play" onclick="say('${esc(w[0])}')">▶</button></div>`});
   h+='</section>';
+  h+=mgHTML(d);
   h+=`<section class="card"><h2>Sound of the day</h2><div class="big"><span class="ipa">${esc(d.sound.ipa)}</span></div><div class="hint">${esc(d.sound.hint)}<br>${esc(d.sound.line1)}<br>${esc(d.sound.line2)}</div><div style="display:flex;gap:10px;margin-top:10px"><button class="pword" onclick="say('${esc(d.sound.pair[0])}')">${esc(d.sound.pair[0])} ▶</button><button class="pword" onclick="say('${esc(d.sound.pair[1])}')">${esc(d.sound.pair[1])} ▶</button></div><div class="note" style="margin-top:6px">Practice pair — say both, feel the difference.</div><div class="esh">Escucha el par y repítelo en voz alta.</div><button class="play" style="margin-top:10px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
   const gk='i12ex_'+d.day;
   h+=`<section class="card"><h2>Grammar in 5 minutes</h2><div class="big" style="font-size:16.5px">${esc(d.grammar.title)}</div><div class="gbox">${esc(d.grammar.ex1)}<br>${esc(d.grammar.ex2)}</div><div class="note" style="margin-top:12px">${esc(d.grammar.intro)}</div><div class="esh">Escribe tu respuesta y toca Check — la app te corrige.</div>`;
@@ -144,7 +307,7 @@ function render(){
   h+=`<section class="card"><h2>Write today</h2><div class="note">Real writing — saved on your phone as you type.</div><div class="esh">Escribe aquí — se guarda solo en tu teléfono.</div>`;
   d.practice.translate.forEach((tr,i)=>{h+=`<div class="tblock"><div class="hint">${esc(tr[0])}</div><input class="winput tr" data-i="${i}" data-k="${wk}_tr${i}" data-ans="${esc(tr[1])}" placeholder="Write it in English"><button class="mini chktr" data-i="${i}" style="margin-top:6px">Check my answer</button><div class="fb" data-t="${i}"></div></div>`});
   h+=`<div class="tblock"><div class="hint">${esc(d.practice.write)}</div><textarea class="winput" data-k="${wk}_free" rows="4" placeholder="Write here"></textarea></div></section>`;
-  h+=`<section class="card"><h2>Phrase of the day</h2><div class="esh" style="margin-bottom:8px">Escucha y repite la frase del día.</div><div class="quote"><div class="q">"${esc(d.phrase.en)}"</div><div class="t">${esc(d.phrase.es)}</div></div><button class="play" style="margin-top:12px" onclick="say('${esc(d.phrase.en)}')">▶</button></section>`;
+  h+=`<section class="card"><h2>Phrase of the day</h2><div class="esh" style="margin-bottom:8px">Escucha y repite la frase del día.</div><div class="quote"><div class="q">"${esc(d.phrase.en)}"</div><div class="t">${esc(d.phrase.es)}</div></div><div class="playrow" style="margin-top:12px"><button class="play" onclick="say('${esc(d.phrase.en)}')">▶</button><button class="play" data-w="${esc(d.phrase.en)}" onclick="saySlow(this.dataset.w)">🐢</button></div><div class="note" style="margin-top:6px">Tap 🐢 to hear it slowly.</div></section>`;
   const snds=[];
   DAYS.filter(x=>x.day<=d.day).forEach(x=>{
     const rev=x.sound.ipa==='review';
